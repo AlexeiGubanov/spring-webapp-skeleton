@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+
+
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:annotation-config/>
+
+
+    <import resource="daos.xml"/>
+    <import resource="services.xml"/>
+
+
+    <!-- Property placeholder -->
+    <!-- a:<context:property-placeholder location="classpath:properties/mail.properties,classpath:properties/database.properties"  />-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/mail.properties</value>
+                <value>classpath:properties/system.properties</value>
+                <value>classpath:properties/database.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Message source -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:i18n/messages</value>
+            </list>
+        </property>
+        <!--<property name="useCodeAsDefaultMessage" value="true"/>-->
+        <!-- seconds to cache resources, TODO in production sets to more much or forever(-1) -->
+        <property name="cacheSeconds" value="5"/>
+        <property name="defaultEncoding" value="UTF-16"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+
+    <bean id="messageHelper" class="org.swas.util.MessagesHelperImpl">
+        <property name="messageSource" ref="messageSource"/>
+    </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+
+    <!--<context:component-scan base-package="com.yowo.aspect" />-->
+    <!--<aop:aspectj-autoproxy>-->
+    <!--<aop:include name="serviceAspect"/>-->
+    <!--</aop:aspectj-autoproxy>-->
+
+
+    <bean id="unthrowableResultMethodAdvice" class="org.swas.aspect.UnthrowableResultMethodAdvice">
+        <property name="order" value="200"/>
+    </bean>
+    <bean id="unthrowableResultMethodAdvisor" class="org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
+        <property name="advice" ref="unthrowableResultMethodAdvice"/>
+        <property name="expression" value="execution(org.swas.service.Result com.yowo.service.*.*(..))"/>
+    </bean>
+    <!--<bean id="loggableServiceMethodAdvice" class="com.yowo.aspect.LoggableServiceMethodAdvice">-->
+    <!--<property name="order" value="100"/>-->
+    <!--</bean>-->
+    <!--<bean id="loggableServiceMethodAdvisor" class="org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">-->
+    <!--<property name="advice" ref="loggableServiceMethodAdvice"/>-->
+    <!--<property name="expression" value="execution(* com.yowo.service.*.*(..))"/>-->
+    <!--</bean>-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+    <!--and @annotation(com.yowo.aspect.Loggable)-->
+
+
+</beans>

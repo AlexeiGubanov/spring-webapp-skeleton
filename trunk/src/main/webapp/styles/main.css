@@ -1,0 +1,308 @@
+* {
+    margin: 0;
+    padding: 0;
+
+}
+
+img {
+    border: 0;
+}
+
+a {
+    color: #231F20;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+h2 {
+    text-align: center;
+    height: 18px;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+header, section, footer, aside, nav, article {
+    display: block;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    height: 100%;
+    min-height: 100%;
+}
+
+input, select {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0 auto;
+    position: relative;
+
+}
+
+
+.clearfix:after {
+    content: ".";
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    display: inline-block;
+}
+
+.clear {
+    clear: both;
+    width: 100%;
+}
+
+.right {
+    float: right;
+}
+
+.inactive {
+    color: #aaa;
+    /*font-style: italic;*/
+}
+
+.bottom {
+    bottom: 0;
+    position: absolute;
+}
+
+.closeMe {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    /*background: url(../images/icons/x24g.png);*/
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    z-index: 4250;
+}
+
+span.highlight {
+    color: #50B2CE;
+}
+
+.corners, .iconContainer {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.horizontalLine {
+    height: 1px;
+    border-top: 1px solid #aaa;
+    width: 100%;
+    clear: both;
+}
+
+.leftColumn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+/* menu drop-down */
+ul.menu, .menu ul {
+    list-style: none;
+}
+
+.menu ul li {
+    padding: 2px 0;
+    font-weight: normal;
+}
+
+/* Doesn't work in IE */
+ul.menu li.hover,
+ul.menu li:hover {
+    /*position: relative;*/
+}
+
+/*
+    LEVEL TWO
+*/
+ul.menu ul {
+    visibility: hidden;
+    /*top: 100%;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    position: absolute;
+
+    z-index: 1000;
+    background-color: #FAFAFA;
+}
+
+/* IE 6 & 7 Needs Inline Block */
+ul.menu ul li a {
+    width: 100%;
+    display: inline-block;
+}
+
+
+.link {
+    cursor: pointer;
+    border-bottom: 1px dotted #666666;
+}
+
+.link:hover {
+    color: #EE3634 !important;
+    border-bottom-color: #EE3634;
+}
+
+/*---------------------------------------------------------------------------*/
+
+#signUpFormContainer {
+    /*height: 400px;*/
+    width: 500px;
+    display: none;
+}
+
+#signInFormContainer {
+    /*height: 270px;*/
+    width: 350px;
+    display: none;
+}
+
+#restorePasswordFormContainer {
+    /*height: 200px;*/
+    width: 350px;
+    display: none;
+}
+
+#signInFormContainer.ui-dialog-content,
+#signUpFormContainer.ui-dialog-content,
+#restorePasswordFormContainer.ui-dialog-content {
+    overflow: visible;
+}
+
+#signInFormContainer .message,
+#signUpFormContainer .message,
+#restorePasswordFormContainer .message {
+    float: left;
+    padding: 20px 10px;
+}
+
+#a_forgotPassword {
+    float: left;
+    font-size: 10pt;
+}
+
+.recaptchatable #recaptcha_response_field {
+    right: 0 !important;
+}
+
+/*---------------------------------------------------------------------------*/
+
+.form h1 {
+    clear: both;
+    color: #50B2CE;
+    font-size: 18pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.form .field {
+    float: left;
+    clear: both;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/*---------------------------------------------------------------------------*/
+
+.form label {
+    width: 38%;
+    float: left;
+    font-size: 13pt;
+}
+
+.form input, .form select {
+    width: 60%;
+    float: left;
+    font-size: 13pt;
+}
+
+.form .error {
+    clear: both;
+    text-align: right;
+    width: 100%;
+    margin: 0;
+    display: none;
+    color: #EE3634;
+    font-size: 8pt;
+}
+
+.form input.errorInput {
+    border: 1px solid #EE3634;
+}
+
+button {
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    background-color: #50B2CE;
+    border: 1px solid #50B2CE;
+    color: #FFFFFF;
+    font-size: 10pt;
+    font-weight: bold;
+    height: 24px;
+    padding: 2px;
+    cursor: pointer;
+
+}
+
+.form button {
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+
+}
+
+button:hover {
+    background-color: #EE3634;
+    border-color: #EE3634;
+}
+
+/*---------------------------------------------------------------------------*/
+
+.ajaxBusy {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity = 70); /* IE 5.5+*/
+    -moz-opacity: 0.7; /* Mozilla 0.1 ? ???? */
+    -khtml-opacity: 0.7; /* Konqueror 3.1, Safari 1.1 */
+    opacity: 0.7; /* CSS3 - Mozilla 1.7b +, Firefox 0.9 +, Safari 1.2+, Opera 9 */
+    background: url("../scripts/jqUI/themes/yowo/images/ui-bg_diagonals-medium_100_fafafa_40x40.png") repeat scroll 50% 50% #AAAAAA;
+}
+
+.ajaxBusyImg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -27px;
+    margin-left: -27px;
+    height: 55px;
+    width: 54px;
+    /*background: url("../images/ajax-loader.gif") no-repeat;*/
+}
+
+
+

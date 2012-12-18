@@ -1,0 +1,312 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+/* Common body style */
+body {
+    position: relative;
+    min-height: 100%;
+    height: auto !important;
+
+}
+
+#header {
+    height: 80px;
+    border: 1px solid black;
+}
+
+#headerLogo {
+    float: left;
+}
+
+#menuContainer {
+    height: 24px;
+    border: 1px solid black;
+    background-color: #EEEEEE;
+}
+
+#container {
+    overflow: hidden;
+    width: 100%;
+}
+
+#leftColumn {
+    float: left;
+    width: 30%;
+    /*min-width: 300px;*/
+}
+
+#content {
+    width: 70%;
+    float: right;
+}
+
+#leftColumn, #content {
+    overflow: auto;
+}
+
+.vsplitbar {
+    width: 3px;
+    background: #aaa;
+}
+
+#tabs {
+    margin-right: 5px;
+    height: 95%;
+}
+
+.inactive {
+    color: #aaa;
+}
+
+.field {
+    width: 100%;
+    clear: both;
+}
+
+/
+/*---------------------------------------------------------------------------*/
+/* menu drop-down */
+.menu ul {
+    list-style: none;
+}
+
+ul.menu {
+    list-style: none;
+    position: relative;
+}
+
+ul.menu li {
+    float: left;
+    zoom: 1;
+    color: #EEE;
+
+}
+
+ul.menu a:hover {
+    color: #000;
+}
+
+ul.menu a:active {
+    color: #ffa500;
+}
+
+ul.menu li a, ul.menu li span {
+    display: block;
+    padding: 4px 8px;
+    border-right: 1px solid #333;
+    color: #222;
+    cursor: pointer;
+}
+
+ul.menu li:last-child a {
+    border-right: none;
+}
+
+/* Doesn't work in IE */
+ul.menu li.hover,
+ul.menu li:hover {
+    background: #BBBBBB;
+    color: black;
+    position: relative;
+}
+
+/* IE: ul.menu ul li					{ display: inline; width: 100%; } */
+
+ul.menu li.hover a {
+    color: black;
+}
+
+/*
+    LEVEL TWO
+*/
+ul.menu ul {
+    width: 250px;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+}
+
+ul.menu ul li {
+    font-weight: normal;
+    background: #f6f6f6;
+    color: #000;
+    border-bottom: 1px solid #ccc;
+    float: none;
+}
+
+/* IE 6 & 7 Needs Inline Block */
+ul.menu ul li a {
+    border-right: none;
+    width: 100%;
+    display: inline-block;
+}
+
+/*
+    LEVEL THREE
+*/
+ul.menu ul ul {
+    left: 100%;
+    top: 0;
+}
+
+ul.menu li:hover > ul {
+    visibility: visible;
+}
+
+/*---------------------------------------------------------------------------*/
+
+.formField {
+    width: 100%;
+    /*height: auto;*/
+    height: 24px;
+    /*padding: 2px;*/
+    color: #333333;
+}
+
+.formFieldLabelContainer, .formFieldValContainer {
+    margin-top: 3px;
+
+}
+
+.formFieldLabelContainer {
+    width: 35%;
+    float: left;
+    text-align: left;
+}
+
+.formFieldLabel {
+    padding: 2px;
+}
+
+.formFieldValContainer {
+    width: 65%;
+    float: right;
+    text-align: left;
+}
+
+.formFieldVal {
+    width: 100%;
+    height: 100%;
+    color: #555555;
+    font-weight: bold;
+}
+
+.error, .message {
+    clear: both;
+    text-align: left;
+    width: 95%;
+    margin: 5px 0;
+    padding: 5px;
+    display: none;
+    font-size: 8pt;
+}
+
+.fieldError {
+    clear: both;
+    display: none;
+    background: none;
+    padding: 0;
+    text-align: right;
+    border: none;
+    margin: 0;
+    color: #CC0000;
+}
+
+.fieldError p {
+    font-size: 8pt;
+}
+
+.error {
+    background-color: #FFE3E3;
+    border: 1px solid #DD0000;
+    color: #880000;
+
+}
+
+.message {
+    border: 1px solid #9FCF9F;
+    color: #005F00;
+    background-color: #DFFFDF;
+}
+
+
+.clear {
+    clear: both;
+    width: 100%;
+}
+
+.horizontalLine {
+    height: 1px;
+    border-top: 1px solid #aaa;
+    width: 100%;
+    clear: both;
+}
+
+.listParamsPager {
+    margin: 5px auto auto;
+    padding-left: 25%;
+    text-align: center;
+    font-size: 18pt;
+    color: #50B2CE;
+    display: inline;
+    width: 100%;
+    clear: both;
+}
+
+.listParamsPager a {
+    color: #50B2CE;
+    display: inline-block;
+}
+
+.listParamsPager .corners {
+    border-radius: 12px;
+    background-color: #50B2CE;
+    width: 24px;
+    height: 24px;
+    color: #FFF;
+    font-size: 10pt;
+    line-height: 24px;
+    font-weight: bold;
+    margin: 0 2px;
+    display: inline-block;
+}
+
+.listParamsPager .active {
+    background-color: #AAA;
+}
+
+.listParamsPager .corners .icon {
+    width: 24px;
+    height: 24px;
+}
+
+.listParamsPager .next {
+    /*background-image: url("../images/icons/gt24w.png");*/
+}
+
+.listParamsPager .prev {
+    /*background-image: url("../images/icons/lt24w.png");*/
+}
+
+.closeMe {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    /*background: url(../images/icons/x24g.png);*/
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    z-index: 4250;
+}

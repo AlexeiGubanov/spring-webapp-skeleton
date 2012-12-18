@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd"
+        >
+
+    <!-- Main web DispatcherServlet Context: settings for main servlet -->
+
+    <!-- Using annotated config for declaring controller beans -->
+    <mvc:annotation-driven validator="validator"/>
+
+    <!--<import resource="security.xml" />-->
+
+    <context:component-scan base-package="org.swas.web"/>
+
+    <!-- explicit handler mapping declaration -->
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>-->
+
+    <!-- explicit handler adapter declaration -->
+    <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <!--<property name="messageConverters">-->
+        <!--<list>-->
+        <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">-->
+        <!--<property name="objectMapper" ref="jsonObjectMapper"/>-->
+        <!--</bean>-->
+        <!--</list>-->
+        <!--</property>-->
+        <property name="synchronizeOnSession" value="true"/>
+    </bean>
+
+    <!--<bean id="jsonObjectMapper" class="com.yowo.web.util.CustomObjectMapper">-->
+    <!--</bean>-->
+
+
+    <!-- Static resources mapping (they'll be processed by DispatcherServlet) -->
+    <mvc:resources mapping="/styles/**" location="/styles/"/>
+    <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources mapping="/scripts/**" location="/scripts/"/>
+
+    <!-- Define view for empty path -->
+    <!--<mvc:view-controller path="/" view-name="index"/>-->
+
+    <!-- Excluded patterns for common interceptors for annotation driven controllers -->
+    <bean id="commonExcludedUrlsHelper"
+          class="org.swas.web.interceptor.ExcludedUrlsHelper">
+        <property name="excludedUrls">
+            <bean class="org.swas.web.util.AntUrlPatternMatcher">
+                <property name="patterns">
+                    <list>
+                        <value>/images/**</value>
+                        <value>/styles/**</value>
+                        <value>/scripts/**</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- Basic interceptors -->
+    <bean id="hibernateInterceptor"
+          class="org.springframework.orm.hibernate4.support.OpenSessionInViewInterceptor">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="characterEncodingInterceptor" class="org.swas.web.interceptor.CharacterEncodingInterceptor"/>
+    <bean id="commonInterceptor" class="org.swas.web.interceptor.CommonInterceptor"/>
+    <bean id="secureInterceptor" class="org.swas.web.interceptor.SecureInterceptor"/>
+    <bean id="hibernateInterceptorWrapped"
+          class="org.springframework.web.servlet.handler.WebRequestHandlerInterceptorAdapter">
+        <constructor-arg ref="hibernateInterceptor"/>
+    </bean>
+
+
+    <!-- Servlet interceptors -->
+    <mvc:interceptors>
+
+        <bean class="org.swas.web.interceptor.DelegatingExcludedUrlsInterceptor">
+            <property name="delegate" ref="characterEncodingInterceptor"/>
+            <property name="urlHelper" ref="commonExcludedUrlsHelper"/>
+        </bean>
+
+        <bean class="org.swas.web.interceptor.DelegatingExcludedUrlsInterceptor">
+            <property name="delegate" ref="commonInterceptor"/>
+            <property name="urlHelper" ref="commonExcludedUrlsHelper"/>
+        </bean>
+
+        <bean class="org.swas.web.interceptor.DelegatingExcludedUrlsInterceptor">
+            <property name="delegate" ref="secureInterceptor"/>
+            <property name="urlHelper" ref="commonExcludedUrlsHelper"/>
+        </bean>
+
+        <bean class="org.swas.web.interceptor.DelegatingExcludedUrlsInterceptor">
+            <property name="delegate" ref="hibernateInterceptorWrapped"/>
+            <property name="urlHelper" ref="commonExcludedUrlsHelper"/>
+        </bean>
+
+
+    </mvc:interceptors>
+
+    <!-- Define Locale Resolver (extracts locale from stateful objects (session, cookies, etc).-->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+
+    <bean id="redirectNoExposeModelAttributesViewResolver"
+          class="org.swas.web.view.RedirectWithoutModelAttributesViewResolver">
+    </bean>
+
+    <!--<bean class="com.yowo.web.helper.ExceptionResolver"/>-->
+
+    <!-- exception resolver by method annotations -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
+        <property name="order" value="1"/>
+        <property name="warnLogCategory" value="com.yowo.web"/>
+    </bean>
+    <!-- exception resolver by mapping -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="order" value="2"/>
+        <property name="defaultErrorView" value="error"/>
+        <property name="warnLogCategory" value="com.yowo.web"/>
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver">
+        <property name="order" value="0"/>
+        <!--<property name="warnLogCategory" value="com.yowo.web"/>-->
+    </bean>
+
+
+    <!-- Tiles view resolver -->
+    <bean id="tilesViewResolver" class="org.swas.web.view.TilesUrlBasedViewResolver">
+        <property name="viewClass" value="org.swas.web.view.DynamicTilesView"/>
+        <!-- prefix and suffix used for url based form (so view with name pages/public/view
+            refers to prefix+pages/public/view+suffix) -->
+        <property name="prefix" value="/WEB-INF/jsp/pages/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="tilesBodyAttributeName" value="content"/>
+        <property name="tilesDefinitionName" value="root"/>
+    </bean>
+    <!-- Tiles config -->
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>classpath:tiles/tiles.xml</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="100000000"/>
+    </bean>
+
+
+</beans>
