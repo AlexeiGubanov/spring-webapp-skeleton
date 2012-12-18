@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <!-- common template for non-authorized user -->
+    <definition name=".root" template="/WEB-INF/jsp/layout/main.jsp">
+        <put-attribute name="title" value="site.defaultTitle"/>
+        <put-attribute name="header" value="/WEB-INF/jsp/layout/tiles/header.jsp"/>
+        <put-attribute name="footer" value="/WEB-INF/jsp/layout/tiles/footer.jsp"/>
+    </definition>
+
+
+    <!--<definition name=".base" template="/WEB-INF/jsp/layout/base.jsp">-->
+    <!--<put-attribute name="title" value="site.defaultTitle"/>-->
+    <!--</definition>-->
+
+    <!--<definition name=".root" extends=".base">-->
+    <!--<put-attribute name="baseContent" value="/WEB-INF/jsp/layout/main.jsp"/>-->
+
+    <!--</definition>-->
+
+    <!--<definition name="index" extends=".base">-->
+    <!--<put-attribute name="baseContent" value="/WEB-INF/jsp/pages/index.jsp"/>-->
+
+    <!--</definition>-->
+
+
+    <!-- common template for admin -->
+    <definition name=".admin.root" template="/WEB-INF/jsp/layout/admin.jsp">
+        <put-attribute name="title" value="site.titleAdmin"/>
+    </definition>
+
+    <!--<definition name="placesForm" template="/WEB-INF/jsp/pages/admin/placesForm.jsp"/>-->
+    <!--<definition name="placeEditForm" template="/WEB-INF/jsp/pages/admin/placeEditForm.jsp"/>-->
+
+    <!-- common template for admin -->
+    <definition name=".pdf.mytrip" template="/WEB-INF/jsp/pages/tmpl/mytrip.pdf.jsp">
+        <put-attribute name="title" value="site.titleAdmin"/>
+    </definition>
+    <definition name=".pdf.tourguide" template="/WEB-INF/jsp/pages/tmpl/tourguide.pdf.jsp">
+        <put-attribute name="title" value="site.titleAdmin"/>
+    </definition>
+
+    <!-- common template for info-ajax requests -->
+    <definition name=".info.root" template="/WEB-INF/jsp/layout/stub.jsp">
+    </definition>
+
+</tiles-definitions>

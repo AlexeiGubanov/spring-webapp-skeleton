@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Full task definition -->
+    <!-- Define spring task sheduler (also it's possible to define task executor) -->
+    <bean id="taskSheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler">
+        <property name="poolSize" value="10"/>
+    </bean>
+
+    <!-- Define rescheduler -->
+    <bean id="rescheduler" class="org.swas.task.ReschedulerImpl">
+        <property name="scheduler" ref="taskSheduler"/>
+    </bean>
+
+    <bean id="reschedulerAware" abstract="true" class="org.swas.task.AbstractReschedulableRunnable">
+        <property name="rescheduler" ref="rescheduler"/>
+    </bean>
+
+    <!-- Define task registrar (one instance) - it will shedule tasks with sheduler -->
+    <bean id="taskRegistrar" class="org.springframework.scheduling.config.ScheduledTaskRegistrar">
+        <property name="scheduler" ref="taskSheduler"/>
+        <property name="cronTasks">
+            <map>
+                <!-- starts at 1:00 am every day -->
+                <!--<entry key-ref="exchangeRatesLoader" value="0 0 1 * * ?"/>-->
+            </map>
+        </property>
+    </bean>
+
+
+</beans>

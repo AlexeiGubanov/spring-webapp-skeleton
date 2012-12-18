@@ -1,0 +1,14 @@
+a * {
+    cursor: pointer;
+}
+
+* html body {
+    height: 100%
+}
+* html .clearfix {
+    height: 1%;
+}
+
+.clearfix {
+    display: block;
+}
